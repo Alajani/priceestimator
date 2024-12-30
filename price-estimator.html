@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        /* Background image with faint effect */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('olabisii.jpg'); /* Replace 'your-image.jpg' with your image file path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: brightness(30%) blur(5px); /* Adjust brightness and blur for faintness */
+            z-index: -1; /* Ensures the image stays behind other content */
+        }
+
+        .content {
+            z-index: 1; /* Keeps content above the background image */
+            padding: 20px;
+            text-align: center;
+            background: rgba(182, 205, 240, 0.8); /* Semi-transparent background for content box */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #001f3f;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #f3f7fa;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #001f3f;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+    <title>iPhone Price Estimator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a55ec;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #c5e7e7;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>iPhone Price Estimator</h1>
+    <p style="text-align: center;">Select your device model and condition to estimate its price.</p>
+
+    <form>
+        <label for="model">Select Model:</label>
+        <select id="model">
+            <option value="" selected disabled>Select Model</option>
+            <option value="x">iPhone X</option>
+            <option value="xr">iPhone XR</option>
+            <option value="xs">iPhone XS</option>
+            <option value="xsmax">iPhone XS Max</option>
+            <option value="11">iPhone 11</option>
+            <option value="11pro">iPhone 11 Pro</option>
+            <option value="11promax">iPhone 11 Pro Max</option>
+            <option value="12">iPhone 12</option>
+            <option value="12pro">iPhone 12 Pro</option>
+            <option value="12promax">iPhone 12 Pro Max</option>
+            <option value="13">iPhone 13</option>
+            <option value="13pro">iPhone 13 Pro</option>
+            <option value="13promax">iPhone 13 Pro Max</option>
+            <option value="14">iPhone 14</option>
+            <option value="14pro">iPhone 14 Pro</option>
+            <option value="14promax">iPhone 14 Pro Max</option>
+            <option value="15">iPhone 15</option>
+            <option value="15pro">iPhone 15 Pro</option>
+            <option value="15promax">iPhone 15 Pro Max</option>
+            <option value="16">iPhone 16</option>
+            <option value="16pro">iPhone 16 Pro</option>
+            <option value="16promax">iPhone 16 Pro Max</option>
+        </select>
+
+        <label for="condition">Select Condition:</label>
+        <select id="condition">
+            <option value="" selected disabled>Select Condition</option>
+            <option value="Excellent">Excellent</option>
+            <option value="No Face ID">No Face ID</option>
+            <option value="Cracked Screen">Cracked Screen</option>
+            <option value="IDM">IDM</option>
+            <option value="NFID+Cracked Screen">NFID+Cracked Screen</option>
+            <option value="Service Battery">Service Battery</option>
+            <option value="Poor Battery Health">Poor Battery Health</option>
+            <option value="Camera Issue">Camera Issue</option>
+            <option value="IDM+Service Battery Health">IDM+Service Battery Health</option>
+        </select>
+
+        <button type="button" onclick="calculatePrice()">Estimate Price</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function calculatePrice() {
+            const model = document.getElementById('model').value;
+            const condition = document.getElementById('condition').value;
+
+            let basePrice = 0;
+
+            // Set base prices for iPhone models
+            switch (model) {
+                case 'x': basePrice = 230000; break;
+                case 'xr': basePrice = 270000; break;
+                case 'xs': basePrice = 280000; break;
+                case 'xsmax': basePrice = 330000; break;
+                case '11': basePrice = 350000; break;
+                case '11pro': basePrice = 430000; break;
+                case '11promax': basePrice = 520000; break;
+                case '12': basePrice = 480000; break;
+                case '12pro': basePrice = 600000; break;
+                case '12promax': basePrice = 720000; break;
+                case '13': basePrice = 680000; break;
+                case '13pro': basePrice = 770000; break;
+                case '13promax': basePrice = 870000; break;
+                case '14': basePrice = 800000; break;
+                case '14pro': basePrice = 900000; break;
+                case '14promax': basePrice = 1000000; break;
+                case '15': basePrice = 1100000; break;
+                case '15pro': basePrice = 1200000; break;
+                case '15promax': basePrice = 1300000; break;
+                case '16': basePrice = 1400000; break;
+                case '16pro': basePrice = 1500000; break;
+                case '16promax': basePrice = 1600000; break;
+                default: 
+                    alert("Please select a model.");
+                    return;
+            }
+
+            // Adjust price based on condition
+            let finalPrice = basePrice;
+            if (condition === "Excellent") finalPrice *= 0.75;
+            else if (condition === "No Face ID") finalPrice *= 0.48;
+            else if (condition === "Cracked Screen") finalPrice *= 0.6;
+            else if (condition === "IDM") finalPrice *= 0.6;
+            else if (condition === "NFID+Cracked Screen") finalPrice *= 0.3;
+            else if (condition === "Serice Battery") finalPrice *= 0.71;
+            else if (condition === "Poor Battery Health") finalPrice *= 0.7;
+            else if (condition === "Camera Issue") finalPrice *= 0.6;
+            else if (condition === "IDM+Service Battery Health") finalPrice *= 0.5;
+
+            // Display result
+            const result = document.getElementById('result');
+            result.innerHTML = `The estimated price for your selected device is: ₦${finalPrice.toLocaleString()}`;
+        }
+    </script>
+</body>
+</html>
